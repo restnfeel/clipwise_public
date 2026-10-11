@@ -1,0 +1,12 @@
+node_modules/
+.next/
+out/
+.env
+.env.*
+!.env.example
+.chisel/
+.codebase-memory/
+*.log
+coverage/
+.DS_Store
+**/uploads/

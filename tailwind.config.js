@@ -1,0 +1,128 @@
+/** Clipwise Airbnb-inspired light workspace tokens. See docs/DESIGN.md. */
+const clipwiseGrayScale = {
+  50: "#FFFFFF",
+  100: "#F7F7F7",
+  200: "#F2F2F2",
+  300: "#EBEBEB",
+  400: "#DDDDDD",
+  500: "#C1C1C1",
+  600: "#929292",
+  700: "#6A6A6A",
+  800: "#3F3F3F",
+  900: "#222222",
+  950: "#111111",
+};
+
+module.exports = {
+  darkMode: "class",
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: [
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Helvetica Neue",
+          "Malgun Gothic",
+          "Apple SD Gothic Neo",
+          "Arial",
+          "sans-serif",
+        ],
+        serif: ["var(--font-bookk-myungjo)", "Georgia", "serif"],
+        accent: ["var(--font-tway-air)", "Malgun Gothic", "sans-serif"],
+      },
+      colors: {
+        gray: clipwiseGrayScale,
+        slate: clipwiseGrayScale,
+        // Clipwise Rausch palette (docs/DESIGN.md)
+        gold: {
+          DEFAULT: "#FF385C",
+          dark: "#E00B41",
+          text: "#FF385C",
+        },
+        cyan: { DEFAULT: "#008A05" },
+        "link-blue": "#428BFF",
+        "teal-action": "#FF385C",
+        charcoal: "#FFFFFF",
+        iron: "#F7F7F7",
+        mist: "#F2F2F2",
+        smoke: "#222222",
+        graphite: "#3F3F3F",
+        ash: "#6A6A6A",
+        steel: "#929292",
+        shadow: "#DDDDDD",
+        brand: {
+          DEFAULT: "#FF385C",
+          50: "#FFF0F3",
+          100: "#FFD1DA",
+          200: "#FFB4C1",
+          300: "#FF8FA4",
+          400: "#FF6B84",
+          500: "#FF385C",
+          600: "#E00B41",
+          700: "#B00032",
+        },
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+      },
+      borderRadius: {
+        none: "0px",
+        sm: "8px",
+        DEFAULT: "8px",
+        md: "14px",
+        lg: "20px",
+        xl: "24px",
+        "2xl": "28px",
+        "3xl": "32px",
+        full: "9999px",
+      },
+      boxShadow: {
+        sm: "0 0 0 1px rgba(0,0,0,.02), 0 2px 6px rgba(0,0,0,.04), 0 4px 8px rgba(0,0,0,.08)",
+        DEFAULT: "0 0 0 1px rgba(0,0,0,.02), 0 2px 6px rgba(0,0,0,.04), 0 4px 8px rgba(0,0,0,.08)",
+        md: "0 0 0 1px rgba(0,0,0,.02), 0 2px 6px rgba(0,0,0,.04), 0 4px 8px rgba(0,0,0,.08)",
+        lg: "0 0 0 1px rgba(0,0,0,.02), 0 2px 6px rgba(0,0,0,.04), 0 4px 8px rgba(0,0,0,.08)",
+        xl: "0 0 0 1px rgba(0,0,0,.02), 0 2px 6px rgba(0,0,0,.04), 0 4px 8px rgba(0,0,0,.08)",
+        "2xl": "0 0 0 1px rgba(0,0,0,.02), 0 2px 6px rgba(0,0,0,.04), 0 4px 8px rgba(0,0,0,.08)",
+        inner: "inset 0 1px 2px rgba(0,0,0,.06)",
+        none: "none",
+      },
+      letterSpacing: {
+        display: "0",
+        caption: "-0.03em",
+        micro: "0.06em",
+      },
+    },
+  },
+  plugins: [],
+};

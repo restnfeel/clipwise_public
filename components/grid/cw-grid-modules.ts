@@ -1,0 +1,35 @@
+import {
+  CellStyleModule,
+  ClientSideRowModelModule,
+  ColumnAutoSizeModule,
+  DateFilterModule,
+  ExternalFilterModule,
+  LocaleModule,
+  NumberFilterModule,
+  PaginationModule,
+  RowApiModule,
+  QuickFilterModule,
+  RowSelectionModule,
+  RowStyleModule,
+  TextFilterModule,
+  TooltipModule,
+  type Module,
+} from "ag-grid-community";
+
+// Community(MIT) 모듈만 등록한다. ag-grid-enterprise 모듈은 추가하지 않는다. (docs/aggrid/01-license-community.md)
+export const CW_GRID_MODULES: Module[] = [
+  ClientSideRowModelModule,
+  CellStyleModule,
+  RowStyleModule,
+  ColumnAutoSizeModule,
+  TextFilterModule,
+  NumberFilterModule,
+  DateFilterModule,
+  QuickFilterModule,
+  RowApiModule,
+  ExternalFilterModule,
+  PaginationModule,
+  RowSelectionModule,
+  TooltipModule,
+  LocaleModule,
+];

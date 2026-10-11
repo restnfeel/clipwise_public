@@ -1,0 +1,534 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --cw-paper: #ffffff;
+  --cw-panel: #ffffff;
+  --cw-surface: #f7f7f7;
+  --cw-ink: #222222;
+  --cw-body: #3f3f3f;
+  --cw-muted: #6a6a6a;
+  --cw-border: #dddddd;
+  --cw-accent: #ff385c;
+  --cw-accent-active: #e00b41;
+  --cw-accent-soft: #fff0f3;
+  --cw-footer-bg: #ffffff;
+  --cw-footer-border: #ebebeb;
+  --cw-footer-text: #222222;
+  --cw-footer-muted: #6a6a6a;
+  --background: 0 0% 100%;
+  --foreground: 0 0% 13%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 13%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 13%;
+
+  --primary: 350 100% 61%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 0 0% 95%;
+  --secondary-foreground: 0 0% 13%;
+
+  --muted: 0 0% 97%;
+  --muted-foreground: 0 0% 42%;
+
+  --accent: 350 100% 61%;
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 10 80% 48%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 0 0% 87%;
+  --input: 0 0% 87%;
+  --ring: 350 100% 61%;
+}
+
+body {
+  color: var(--cw-ink);
+  background: var(--cw-paper);
+}
+
+/* Legacy dashboard navigation inherits the shared light workspace system. */
+.dashboard-sidebar { background: var(--cw-paper) !important; color: var(--cw-ink) !important; border-color: var(--cw-border) !important; }
+.dashboard-sidebar .text-white, .dashboard-sidebar .text-white\/70, .dashboard-sidebar .text-white\/80 { color: var(--cw-ink) !important; }
+.dashboard-sidebar .text-steel { color: var(--cw-muted) !important; }
+.dashboard-sidebar .bg-black { background: var(--cw-paper) !important; }
+.dashboard-sidebar .bg-white\/10 { background: var(--cw-surface-strong, #f2f2f2) !important; }
+.dashboard-sidebar .bg-white\/20 { background: var(--cw-border) !important; }
+.dashboard-sidebar .border-white\/10 { border-color: var(--cw-border) !important; }
+.dashboard-sidebar .bg-gold { background: var(--cw-accent) !important; }
+.dashboard-sidebar .text-black { color: #ffffff !important; }
+.dashboard-sidebar .text-gray-400,
+.dashboard-sidebar .text-gray-500,
+.dashboard-sidebar .text-steel { color: var(--cw-muted) !important; }
+.dashboard-sidebar [class*="hover\\:bg-white\\/10"]:hover { background: var(--cw-surface) !important; }
+.dashboard-sidebar [class*="hover\\:bg-white\\/20"]:hover { background: var(--cw-border) !important; }
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --cw-paper: #0f1115;
+  --cw-panel: #171a21;
+  --cw-surface: #20242c;
+  --cw-ink: #f5f7fa;
+  --cw-body: #d5d9e0;
+  --cw-muted: #a4acb8;
+  --cw-border: #343a46;
+  --cw-accent: #ff5a72;
+  --cw-accent-soft: #3a2027;
+  --cw-footer-bg: #171a21;
+  --cw-footer-border: #343a46;
+  --cw-footer-text: #f5f7fa;
+  --cw-footer-muted: #a4acb8;
+  --background: 220 20% 7%;
+  --foreground: 210 20% 97%;
+  --card: 220 18% 10%;
+  --card-foreground: 210 20% 97%;
+  --popover: 220 18% 10%;
+  --popover-foreground: 210 20% 97%;
+  --secondary: 220 14% 15%;
+  --secondary-foreground: 210 20% 97%;
+  --muted: 220 14% 15%;
+  --muted-foreground: 215 12% 68%;
+  --border: 220 14% 23%;
+  --input: 220 14% 23%;
+}
+
+/* Legacy Joseph screens inherit the shared light system; dark mode remains an explicit opt-in only. */
+
+h1, h2, h3, h4 {
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* Blog/report prose stays on its documented light "rare surface" exception
+   (docs/DESIGN.md 2. Surface & Background) so long-form Korean copy stays readable. */
+.naver-blog-style h1, .naver-blog-style h2, .naver-blog-style h3, .naver-blog-style h4,
+.blog-content h1, .blog-content h2, .blog-content h3,
+.magazine-style h1, .magazine-style h2, .magazine-style h3, .magazine-style h4,
+.magazine-hero, .magazine-section-title, .magazine-card-title {
+  text-transform: none;
+}
+
+::selection {
+  background: #FFC000;
+  color: #000000;
+}
+
+:focus-visible {
+  outline: 2px solid #FFC000;
+  outline-offset: 2px;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 1rem;
+  z-index: 1000;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  background-color: #ffffff;
+  color: #111827;
+  font-weight: 600;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
+  transition: left 0.2s ease, box-shadow 0.2s ease;
+}
+
+.skip-link:focus-visible {
+  left: 1rem;
+  box-shadow: 0 20px 35px rgba(15, 23, 42, 0.25);
+  outline: 2px solid #3b82f6;
+  outline-offset: 4px;
+}
+
+/* 네이버 블로그 스타일 */
+.naver-blog-style {
+  font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", helvetica, "Apple SD Gothic Neo", sans-serif;
+  color: #333;
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+.naver-blog-style h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  color: #222;
+  border-bottom: 2px solid #e5e5e5;
+  padding-bottom: 15px;
+}
+
+.naver-blog-style h2 {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-top: 35px;
+  margin-bottom: 18px;
+  color: #222;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 12px;
+}
+
+.naver-blog-style h3 {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.naver-blog-style h4 {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-top: 25px;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.naver-blog-style p {
+  margin-bottom: 20px;
+  line-height: 1.8;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.naver-blog-style p:last-child {
+  margin-bottom: 0;
+}
+
+.naver-blog-style ul,
+.naver-blog-style ol {
+  margin: 20px 0;
+  padding-left: 30px;
+  line-height: 1.8;
+}
+
+.naver-blog-style ul li,
+.naver-blog-style ol li {
+  margin-bottom: 10px;
+  padding-left: 5px;
+}
+
+.naver-blog-style ul {
+  list-style-type: disc;
+}
+
+.naver-blog-style ol {
+  list-style-type: decimal;
+}
+
+.naver-blog-style blockquote {
+  border-left: 4px solid #03c75a;
+  padding: 15px 20px;
+  margin: 25px 0;
+  background-color: #f8f9fa;
+  color: #555;
+  font-style: italic;
+  border-radius: 4px;
+}
+
+.naver-blog-style code {
+  background-color: #f4f4f4;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: "Consolas", "Monaco", "Courier New", monospace;
+  font-size: 14px;
+  color: #e83e8c;
+}
+
+.naver-blog-style pre {
+  background-color: #2d2d2d;
+  color: #f8f8f2;
+  padding: 20px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 25px 0;
+  line-height: 1.6;
+}
+
+.naver-blog-style pre code {
+  background-color: transparent;
+  padding: 0;
+  color: inherit;
+  font-size: 14px;
+}
+
+.naver-blog-style strong {
+  font-weight: 700;
+  color: #222;
+}
+
+.naver-blog-style em {
+  font-style: italic;
+  color: #555;
+}
+
+.naver-blog-style a {
+  color: #03c75a;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.naver-blog-style a:hover {
+  color: #02b350;
+}
+
+/* Blog detail: brand-aligned links & blockquote */
+.blog-detail-content.naver-blog-style a {
+  color: #0d9488;
+  text-underline-offset: 3px;
+}
+.blog-detail-content.naver-blog-style a:hover {
+  color: #0f766e;
+}
+.blog-detail-content.naver-blog-style blockquote {
+  border-left-color: #0d9488;
+  background-color: rgba(236, 253, 251, 0.4);
+  border-radius: 0 8px 8px 0;
+}
+.blog-detail-content.naver-blog-style h1,
+.blog-detail-content.naver-blog-style h2 {
+  border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+
+.naver-blog-style img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 25px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.naver-blog-style hr {
+  border: none;
+  border-top: 1px solid #e5e5e5;
+  margin: 30px 0;
+}
+
+.naver-blog-style table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 25px 0;
+}
+
+.naver-blog-style table th,
+.naver-blog-style table td {
+  border: 1px solid #e5e5e5;
+  padding: 12px;
+  text-align: left;
+}
+
+.naver-blog-style table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #222;
+}
+
+/* Remove default positioning from Next.js portal */
+nextjs-portal {
+  left: unset;
+  top: unset;
+}
+
+/* Blog content styles */
+.blog-content {
+  line-height: 1.8;
+}
+
+.blog-content h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #111827;
+}
+
+.blog-content h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: #1f2937;
+}
+
+.blog-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #374151;
+}
+
+.blog-content p {
+  margin-bottom: 1rem;
+}
+
+.blog-content a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.blog-content a:hover {
+  color: #1d4ed8;
+}
+
+.blog-content code {
+  background-color: #f3f4f6;
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+  font-family: monospace;
+}
+
+.blog-content pre {
+  background-color: #1f2937;
+  color: #f9fafb;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.blog-content pre code {
+  background-color: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+.blog-content strong {
+  font-weight: 600;
+}
+
+.blog-content em {
+  font-style: italic;
+}
+
+/* 매거진/보고서 스타일 */
+.magazine-style {
+  font-family: var(--font-bookk-myungjo), 'Georgia', serif;
+  color: #1a1a1a;
+  line-height: 1.7;
+}
+
+.magazine-hero {
+  font-family: var(--font-bookk-myungjo), 'Georgia', serif;
+  letter-spacing: -0.02em;
+}
+
+.magazine-section-title {
+  font-family: var(--font-bookk-myungjo), 'Georgia', serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.magazine-card-title {
+  font-family: var(--font-bookk-myungjo), 'Georgia', serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+}
+
+/* 매거진 카드 호버 효과 */
+.magazine-card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.magazine-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* 매거진 그리드 간격 */
+.magazine-grid {
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .magazine-grid {
+    gap: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .magazine-grid {
+    gap: 3rem;
+  }
+}
+
+/* 매거진 섹션 여백 */
+.magazine-section {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+  .magazine-section {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .magazine-section {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+/* 매거진 텍스트 스타일 */
+.magazine-text {
+  font-family: var(--font-bookk-myungjo), 'Georgia', serif;
+  line-height: 1.75;
+  color: #7D7D7D;
+}
+
+.magazine-text-light {
+  font-weight: 300;
+  color: #969696;
+}
+
+/* 매거진 컨테이너 최대 너비 */
+.magazine-container {
+  max-width: 1280px;
+}
+
+/* 매거진 카드 테두리 */
+.magazine-card-border {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.5rem;
+}
+
+/* 매거진 이미지 스타일 */
+.magazine-image {
+  border-radius: 0.5rem;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.magazine-image:hover {
+  transform: scale(1.02);
+}
+
+/* AG Grid: 상세 드로워로 열린 행 표시 */
+.ag-row.cw-grid-row-active { background-color: var(--cw-accent-soft); box-shadow: inset 3px 0 0 var(--cw-accent); }
+
+/* AG Grid: 상세는 첫 번째 컬럼 셀 클릭으로만 연다 */
+.ag-cell.cw-grid-open-cell { cursor: pointer; }
+.ag-cell.cw-grid-open-cell:hover,
+.ag-cell.cw-grid-open-cell:hover p:first-child { color: var(--cw-accent); text-decoration: underline; text-underline-offset: 3px; }
+
+/* AG Grid: 행이 없는 로딩 상태에서도 오버레이가 보일 높이를 확보한다 */
+.cw-grid-loading .ag-root-wrapper { min-height: 240px; }

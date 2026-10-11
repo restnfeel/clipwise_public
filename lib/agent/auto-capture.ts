@@ -1,0 +1,7 @@
+export type CaptureClass = "pass" | "keep";
+export type ToolCall = { tool: string; args: Record<string, unknown>; isError: boolean; data: unknown };
+export function classifyTool(tool: string, isError: boolean): CaptureClass { return isError || ["knowledge_apply", "tiro_sync"].includes(tool) ? "keep" : "pass"; }
+export function summarizeArgs(args: Record<string, unknown>) { return Object.entries(args).map(([key, value]) => `${key}=${typeof value === "string" ? value.slice(0, 120) : "(입력)"}`).join(", ").slice(0, 300); }
+export function summarizeResult(data: unknown, isError: boolean) { return { text: isError ? "실패" : "성공", code: null, sourceIds: [] as string[] }; }
+export function hasToolCall(body: unknown) { return (Array.isArray(body) ? body : [body]).some((item) => Boolean(item && typeof item === "object" && (item as { method?: string }).method === "tools/call")); }
+export function extractToolCalls(requestBody: unknown, responseBody: unknown): ToolCall[] { void responseBody; const requests = (Array.isArray(requestBody) ? requestBody : [requestBody]); return requests.flatMap((item) => { if (!item || typeof item !== "object" || (item as { method?: string }).method !== "tools/call") return []; const params = (item as { params?: { name?: string; arguments?: Record<string, unknown> } }).params; return params?.name ? [{ tool: params.name, args: params.arguments || {}, isError: false, data: {} }] : []; }); }
