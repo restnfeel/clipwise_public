@@ -50,7 +50,8 @@ export function AgentActivitySection() {
     setLoading(true);
     try {
       const response = await fetch("/api/agent/runs", { cache: "no-store" });
-      const body = await response.json();
+      const raw = await response.text();
+      const body = JSON.parse(raw) as { error?: string; runs?: Run[]; feedback?: Feedback[] };
       if (!response.ok) throw new Error(body.error || "에이전트 활동을 읽지 못했습니다.");
       setRuns(body.runs || []); setFeedback(body.feedback || []);
     } catch (error) { notice.error(error instanceof Error ? error.message : "에이전트 활동을 읽지 못했습니다."); }
@@ -63,7 +64,8 @@ export function AgentActivitySection() {
     setSaving(run.id);
     try {
       const response = await fetch("/api/agent/runs", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ runId: run.id, rating }) });
-      const body = await response.json();
+      const raw = await response.text();
+      const body = JSON.parse(raw) as { error?: string };
       if (!response.ok) throw new Error(body.error || "평가를 저장하지 못했습니다.");
       setFeedback((current) => [...current.filter((item) => item.run_id !== run.id), { run_id: run.id, rating }]);
       notice.success(rating === "good" ? "좋은 답변으로 기록했습니다." : "개선 후보로 기록했습니다.");

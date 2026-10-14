@@ -3,6 +3,10 @@ import Link from "next/link";
 import { ArrowDownRight, ArrowRight, Check, FileText, Headphones, MessageCircle, Mic2, Search, Sparkles, Upload } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { LandingHeader } from "@/components/landing/LandingHeader";
+import { redirect } from "next/navigation";
+import { getDatabaseSetupStatus } from "@/lib/setup/database-status";
+
+export const dynamic = "force-dynamic";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "") || "http://localhost:3000";
 export const metadata: Metadata = {
@@ -79,7 +83,9 @@ function WebResult({ accent, title, quote, Icon }: { accent: string; title: stri
   return <div className="relative rounded-[24px] border border-[#ded8d0] bg-[#fffdfa] p-5 shadow-[0_18px_50px_rgba(75,55,36,0.1)]"><div className="flex items-center justify-between border-b border-[#eee8e0] pb-4"><span className="flex items-center gap-2 text-xs font-bold tracking-[0.14em] text-[#766c63]"><span className="grid h-7 w-7 place-items-center rounded-full text-white" style={{ backgroundColor: accent }}><Icon className="h-3.5 w-3.5" /></span> MY KNOWLEDGE WEB</span><span className="text-[10px] text-[#a0968c]">공개 페이지</span></div><p className="mt-5 text-[10px] font-bold tracking-[0.16em]" style={{ color: accent }}>RECENTLY ORGANIZED</p><h3 className="mt-2 font-serif text-2xl text-[#2d2925]">{title}</h3><div className="mt-5 space-y-2"><div className="h-2.5 w-[90%] rounded-full bg-[#eee8e0]" /><div className="h-2.5 w-[76%] rounded-full bg-[#eee8e0]" /><div className="h-2.5 w-[58%] rounded-full bg-[#eee8e0]" /></div><div className="mt-6 rounded-2xl p-4" style={{ backgroundColor: `${accent}12` }}><p className="text-xs font-semibold leading-6 text-[#51483f]">“{quote}”</p></div></div>;
 }
 
-export default function Home() {
+export default async function Home() {
+  const database = await getDatabaseSetupStatus().catch(() => ({ ready: true, missing: [], unavailable: true }));
+  if (database.missing.length > 0) redirect("/setup?reason=missing-tables");
   return <main className="min-h-screen overflow-hidden bg-[#fbf8f3] text-[#2d2925]">
     <LandingHeader />
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareJsonLd) }} />

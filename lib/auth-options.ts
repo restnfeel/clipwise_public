@@ -3,6 +3,7 @@ import KakaoProvider from "next-auth/providers/kakao";
 import GoogleProvider from "next-auth/providers/google";
 import { supabaseAdmin } from "@/lib/supabase";
 import { GOOGLE_LOGIN_ENABLED } from "@/lib/auth-features";
+import { databaseSetupRedirectUrl, getDatabaseSetupStatus } from "@/lib/setup/database-status";
 
 const kakaoEnabled = Boolean(process.env.KAKAO_CLIENT_ID?.trim() && process.env.KAKAO_CLIENT_SECRET?.trim());
 const allowedEmails = new Set((process.env.ALLOWED_EMAILS || "").split(",").map((email) => email.trim().toLowerCase()).filter(Boolean));
@@ -16,6 +17,8 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user, account }) {
       const email = user.email?.trim().toLowerCase();
       if (!email || (allowedEmails.size > 0 && !allowedEmails.has(email))) return false;
+      const setup = await getDatabaseSetupStatus().catch(() => ({ ready: false, missing: [], unavailable: true }));
+      if (setup.missing.length > 0) return databaseSetupRedirectUrl();
       const providerColumn = account?.provider === "google" ? "google_id" : "kakao_id";
       const providerId = user.id;
       const { data: existing } = await supabaseAdmin.from("users").select("id,status").eq(providerColumn, providerId).maybeSingle();
